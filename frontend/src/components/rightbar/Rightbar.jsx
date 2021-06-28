@@ -10,10 +10,13 @@ import { Add, Remove } from "@material-ui/icons";
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?.id)
-  );
+  const [followed, setFollowed] = useState(false);
+
+  useEffect(() => {
+    setFollowed(currentUser.followings.includes(user?._id));
+  }, [user, currentUser]);
 
   useEffect(() => {
     const getFriends = async () => {
@@ -27,34 +30,67 @@ export default function Rightbar({ user }) {
     getFriends();
   }, [user]);
 
-  const handleClick = async () => {
+  useEffect(() => {
+    const getSuggestion = async () => {
+      try {
+        const suggestionList = await axios.get(
+          "/users/suggestions/" + currentUser._id
+        );
+        console.log(suggestionList);
+        setSuggestions(suggestionList.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getSuggestion();
+  }, [currentUser]);
+
+  const handleClick = async (user, option) => {
+    console.log("handle");
     try {
-      if (followed) {
-        await axios.put(`/users/${user._id}/unfollow`, {
-          userId: currentUser._id,
-        });
-        dispatch({ type: "UNFOLLOW", payload: user._id });
-      } else {
+      if (option === "suggestion") {
         await axios.put(`/users/${user._id}/follow`, {
           userId: currentUser._id,
         });
         dispatch({ type: "FOLLOW", payload: user._id });
+      } else {
+        if (followed) {
+          await axios.put(`/users/${user._id}/unfollow`, {
+            userId: currentUser._id,
+          });
+          dispatch({ type: "UNFOLLOW", payload: user._id });
+        } else {
+          await axios.put(`/users/${user._id}/follow`, {
+            userId: currentUser._id,
+          });
+          dispatch({ type: "FOLLOW", payload: user._id });
+        }
+        setFollowed(!followed);
       }
-      setFollowed(!followed);
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   const HomeRightbar = () => {
     return (
       <>
+        <h4 className="rightbarTitle">Suggestions</h4>
         <div className="birthdayContainer">
-          <img className="birthdayImg" src="assets/gift.png" alt="" />
-          <span className="birthdayText">
-            <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
-          </span>
+          {suggestions.map((u) => (
+            <div className="suggestion">
+              <div className="name">{u.username}</div>
+              <button
+                className="suggestionFollowButton"
+                onClick={() => handleClick(u, "suggestion")}
+              >
+                Follow
+                <Add />
+              </button>
+            </div>
+          ))}
         </div>
-        <img className="rightbarAd" src="assets/ad.png" alt="" />
+
+        <hr className="sidebarHr" />
+
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
           {Users.map((u) => (
@@ -69,7 +105,10 @@ export default function Rightbar({ user }) {
     return (
       <>
         {user.username !== currentUser.username && (
-          <button className="rightbarFollowButton" onClick={handleClick}>
+          <button
+            className="rightbarFollowButton"
+            onClick={() => handleClick(user, "profile")}
+          >
             {followed ? "Unfollow" : "Follow"}
             {followed ? <Remove /> : <Add />}
           </button>
@@ -100,7 +139,7 @@ export default function Rightbar({ user }) {
           {friends.map((friend) => (
             <Link
               to={"/profile/" + friend.username}
-              style={{ textDecoration: "none" }}
+              style={{ textDecoration: "none", color: "black" }}
             >
               <div className="rightbarFollowing">
                 <img

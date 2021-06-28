@@ -69,12 +69,11 @@ router.get("/friends/:userId", async (req, res) => {
       const { _id, username, profilePicture } = friend;
       friendList.push({ _id, username, profilePicture });
     });
-    res.status(200).json(friendList)
+    res.status(200).json(friendList);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
 
 //follow a user
 router.put("/:id/follow", async (req, res) => {
@@ -115,6 +114,21 @@ router.put("/:id/unfollow", async (req, res) => {
     }
   } else {
     res.status(403).json("you cant unfollow yourself");
+  }
+});
+
+//suggestions
+router.get("/suggestions/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    const friends = user.followings;
+    friends.push(req.params.userId);
+    const allUsers = await User.find();
+
+    const suggestion = allUsers.filter((item) => !friends.includes(item._id));
+    res.status(200).json(suggestion);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
