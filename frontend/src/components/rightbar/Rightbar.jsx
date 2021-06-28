@@ -1,11 +1,11 @@
 import "./rightbar.scss";
-import { Users } from "../../dummyData";
 import Online from "../online/Online";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
+import { io } from "socket.io-client";
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -13,6 +13,12 @@ export default function Rightbar({ user }) {
   const [suggestions, setSuggestions] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [followed, setFollowed] = useState(false);
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  const socket = useRef();
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, []);
 
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));
@@ -31,12 +37,20 @@ export default function Rightbar({ user }) {
   }, [user]);
 
   useEffect(() => {
+    socket.current.emit("addUser", currentUser._id);
+    socket.current.on("getUsers", (users) => {
+      setOnlineUsers(
+        currentUser.followings.filter((f) => users.some((u) => u.userId === f))
+      );
+    });
+  }, [currentUser]);
+
+  useEffect(() => {
     const getSuggestion = async () => {
       try {
         const suggestionList = await axios.get(
           "/users/suggestions/" + currentUser._id
         );
-        console.log(suggestionList);
         setSuggestions(suggestionList.data);
       } catch (err) {
         console.log(err);
@@ -92,11 +106,16 @@ export default function Rightbar({ user }) {
         <hr className="sidebarHr" />
 
         <h4 className="rightbarTitle">Online Friends</h4>
-        <ul className="rightbarFriendList">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
-        </ul>
+        <Link
+          to={"/messenger"}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <ul className="rightbarFriendList">
+            {onlineUsers.map((u) => (
+              <Online key={u} user={u} />
+            ))}
+          </ul>
+        </Link>
       </>
     );
   };
