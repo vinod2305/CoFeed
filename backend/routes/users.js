@@ -2,8 +2,10 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
+
 //update user
 router.put("/:id", async (req, res) => {
+  console.log(req.body)
   if (req.body.userId == req.params.id || req.user.isAdmin) {
     if (req.body.password) {
       try {
@@ -27,6 +29,7 @@ router.put("/:id", async (req, res) => {
     return res.status(403).json("You can update only your account!");
   }
 });
+
 
 //delete user
 router.delete("/:id", async (req, res) => {
