@@ -6,6 +6,7 @@ import {
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import CameraAltIcon from '@material-ui/icons/CameraAlt';
 
 export default function Share() {
   const { user } = useContext(AuthContext);
@@ -56,18 +57,12 @@ export default function Share() {
             ref={desc}
           />
         </div>
-        <hr className="shareHr" />
-        {file && (
-          <div className="shareImgContainer">
-            <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
-            <Cancel className="shareCancelImg" onClick={() => setFile(null)} />
-          </div>
-        )}
+       
+       
         <form className="shareBottom" onSubmit={submitHandler}>
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">
-              <PermMedia htmlColor="tomato" className="shareIcon" />
-              <span className="shareOptionText">Photo</span>
+              <CameraAltIcon  className="shareIcon" />
               <input
                 style={{ display: "none" }}
                 type="file"
@@ -82,6 +77,12 @@ export default function Share() {
           </button>
         </form>
       </div>
+      {file && (
+          <div className="shareImgContainer">
+            <img className="shareImg" src={URL.createObjectURL(file)} alt="" />
+            <Cancel className="shareCancelImg" onClick={() => setFile(null)} />
+          </div>
+        )}
     </div>
   );
 }

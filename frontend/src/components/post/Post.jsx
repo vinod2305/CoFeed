@@ -60,8 +60,8 @@ export default function Post({ post }) {
           </div>
         </div>
         <div className="postCenter">
-          <span className="postText">{post?.desc}</span>
           <img className="postImg" src={PF + post.img} alt="" />
+          <span className="postText">{post?.desc}</span>
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
@@ -71,16 +71,7 @@ export default function Post({ post }) {
               onClick={likeHandler}
               alt=""
             />
-            <img
-              className="likeIcon"
-              src={`${PF}heart.png`}
-              onClick={likeHandler}
-              alt=""
-            />
-            <span className="postLikeCounter">{like} people like it</span>
-          </div>
-          <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} comments</span>
+            <span className="postLikeCounter">{like} Like</span>
           </div>
         </div>
       </div>

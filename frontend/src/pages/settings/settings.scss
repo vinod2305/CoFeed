@@ -1,0 +1,64 @@
+.settingsBox{
+   align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.settingtext{
+    margin: 5px;
+}
+
+.settingsWrapper{
+    flex: 9 1;
+}
+.loginInput{
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 18px;
+    padding-left: 20px;
+}
+
+.loginInput:focus{
+    outline: none;
+}
+
+.settingButton{
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #a976fc;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 10px
+}
+.settingHeading{
+    margin: 40px 0 0 80px;
+}
+
+.loginForgot{
+    text-align: center;
+    color: #a976fc;
+}
+
+.loginRegisterButton{
+    width: 60%;
+    align-self: center;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #36008d;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.settings{
+    display: flex;
+    background-color: #f2f6fc;
+}

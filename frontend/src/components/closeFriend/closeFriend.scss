@@ -2,13 +2,18 @@
 .sidebarFriend {
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
   }
   
   .sidebarFriendImg {
-    width: 32px;
-    height: 32px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     object-fit: cover;
-    margin-right: 10px;
+    margin-right: 15px;
+    border: 3px solid #ffff;
+  }
+
+  .sidebarFriendName{
+    font-size: 18px;
   }

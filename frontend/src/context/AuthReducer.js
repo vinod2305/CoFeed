@@ -19,6 +19,25 @@ const AuthReducer = (state, action) => {
         isFetching: false,
         error: action.error,
       };
+      case "UPDATE_START":
+        return {
+          ...state,
+          isFetching: true,
+          error: false,
+        };
+      case "UPDATE_SUCCESS":
+        console.log(action.payload)
+        return {
+          user: action.payload,
+          isFetching: false,
+          error: false,
+        };
+      case "UPDATE_FAILURE":
+        return {
+          ...state,
+          isFetching: false,
+          error: action.error,
+        };
     case "FOLLOW":
       return {
         ...state,

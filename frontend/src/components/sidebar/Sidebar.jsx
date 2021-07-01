@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import CloseFriend from "../closeFriend/CloseFriend";
 import axios from "axios";
+import { Settings } from "@material-ui/icons";
 
 export default function Sidebar() {
   const [friends, setFriends] = useState([]);
@@ -24,6 +25,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
+      <h4 className="rightbarTitle">MENU</h4>
         <ul className="sidebarList">
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
             <li className="sidebarListItem">
@@ -49,6 +51,15 @@ export default function Sidebar() {
             <li className="sidebarListItem">
               <Person className="sidebarIcon" />
               <span className="sidebarListItemText">Profile</span>
+            </li>
+          </Link>
+          <Link
+            to={`/settings`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <li className="sidebarListItem">
+              <Settings className="sidebarIcon" />
+              <span className="sidebarListItemText">Settings</span>
             </li>
           </Link>
         </ul>

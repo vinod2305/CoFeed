@@ -11,6 +11,7 @@ import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import Messenger from "./pages/messenger/Messenger";
 import { useContext } from "react";
+import Settings from "./pages/settings/Settings";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route path="/profile/:username">
           <Profile />
+        </Route>
+        <Route path="/settings">
+          <Settings />
         </Route>
       </Switch>
     </Router>

@@ -87,11 +87,24 @@ export default function Rightbar({ user }) {
   const HomeRightbar = () => {
     return (
       <>
-        <h4 className="rightbarTitle">Suggestions</h4>
+        <h4 className="rightbarTitle">Suggestions For You</h4>
         <div className="birthdayContainer">
           {suggestions.map((u) => (
             <div className="suggestion">
-              <div className="name">{u.username}</div>
+              <Link
+                to={"/profile/" + u.username}
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <div class="suggestionimage">
+                  <img
+                    className="rightbarProfileImg"
+                    src={PF + u.profilePicture}
+                    alt=""
+                  />
+                  <div className="name">{u.username}</div>
+                </div>
+              </Link>
+
               <button
                 className="suggestionFollowButton"
                 onClick={() => handleClick(u, "suggestion")}
@@ -138,7 +151,7 @@ export default function Rightbar({ user }) {
             <span className="rightbarInfoKey">City:</span>
             <span className="rightbarInfoValue">{user.city}</span>
           </div>
-          <div className="rightbarInfoItem">
+          {/* <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">From:</span>
             <span className="rightbarInfoValue">{user.from}</span>
           </div>
@@ -151,6 +164,14 @@ export default function Rightbar({ user }) {
                 ? "Married"
                 : "-"}
             </span>
+          </div> */}
+          <div className="rightbarInfoItem">
+            <span className="rightbarInfoKey">Following:</span>
+            <span className="rightbarInfoValue">{user?.followings?.length}</span>
+          </div>
+          <div className="rightbarInfoItem">
+            <span className="rightbarInfoKey">Followers:</span>
+            <span className="rightbarInfoValue">{user?.followers?.length}</span>
           </div>
         </div>
         <h4 className="rightbarTitle">User friends</h4>

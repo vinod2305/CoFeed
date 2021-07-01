@@ -12,6 +12,20 @@ export const LoginFailure = (error) => ({
     payload: error
 });
 
+export const UpdateStart = (data) => ({
+    type: "UPDATE_START",
+});
+
+export const UpdateSuccess = (user) => ({
+    type: "UPDATE_SUCCESS",
+    payload: user,
+});
+
+export const UpdateFailure = (error) => ({
+    type: "UPDATE_FAILURE",
+    payload: error
+});
+
 export const Follow = (userId) => ({
     type: "FOLLOW",
     payload: userId,
