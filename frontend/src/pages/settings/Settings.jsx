@@ -4,8 +4,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import { useEffect, useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { settingsCall } from "../../apiCalls";
-import CameraAltIcon from "@material-ui/icons/CameraAlt";
-import { Avatar, CircularProgress, IconButton } from "@material-ui/core";
+import { Avatar, CircularProgress } from "@material-ui/core";
 import axios from "axios";
 
 export default function Settings() {

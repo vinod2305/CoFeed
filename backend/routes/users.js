@@ -2,11 +2,10 @@ const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
-
 //update user
 router.put("/:id", async (req, res) => {
-  console.log(req.body)
-  if (req.body.userId == req.params.id || req.user.isAdmin) {
+  console.log(req.body);
+  if (req.body.userId == req.params.id) {
     if (req.body.password) {
       try {
         const salt = await bcrypt.genSalt(10);
@@ -29,7 +28,6 @@ router.put("/:id", async (req, res) => {
     return res.status(403).json("You can update only your account!");
   }
 });
-
 
 //delete user
 router.delete("/:id", async (req, res) => {
@@ -82,6 +80,8 @@ router.get("/friends/:userId", async (req, res) => {
 
 //follow a user
 router.put("/:id/follow", async (req, res) => {
+  console.log(req.body);
+  console.log(res.params);
   if (req.body.userId !== req.params.id) {
     try {
       const user = await User.findById(req.params.id);
@@ -128,7 +128,10 @@ router.get("/suggestions/:userId", async (req, res) => {
     const user = await User.findById(req.params.userId);
     const friends = user.followings;
     friends.push(req.params.userId);
-    const allUsers = await User.find();
+    const allUsers = await User.find(
+      {},
+      { password: 0, createdAt: 0, updatedAt: 0 }
+    );
 
     const suggestion = allUsers.filter((item) => !friends.includes(item._id));
     res.status(200).json(suggestion);

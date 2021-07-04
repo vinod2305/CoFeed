@@ -1,5 +1,5 @@
 import "./topbar.scss";
-import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { Search } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";

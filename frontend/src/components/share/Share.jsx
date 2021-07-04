@@ -1,6 +1,5 @@
 import "./share.scss";
 import {
-  PermMedia,
   Cancel,
 } from "@material-ui/icons";
 import { useContext, useRef, useState } from "react";
