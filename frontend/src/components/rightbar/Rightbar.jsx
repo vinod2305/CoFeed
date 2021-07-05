@@ -120,7 +120,9 @@ export default function Rightbar({ user }) {
 
         <h4 className="rightbarTitle">Online Friends</h4>
         <Link
-          to={"/messenger"}
+          onClick={() =>
+            (window.location.href = "http://localhost:3000/messenger")
+          }
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <ul className="rightbarFriendList">
@@ -167,7 +169,9 @@ export default function Rightbar({ user }) {
           </div> */}
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Following:</span>
-            <span className="rightbarInfoValue">{user?.followings?.length}</span>
+            <span className="rightbarInfoValue">
+              {user?.followings?.length}
+            </span>
           </div>
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Followers:</span>

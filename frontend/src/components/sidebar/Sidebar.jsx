@@ -25,7 +25,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
-      <h4 className="rightbarTitle">MENU</h4>
+        <h4 className="rightbarTitle">MENU</h4>
         <ul className="sidebarList">
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
             <li className="sidebarListItem">
@@ -35,7 +35,9 @@ export default function Sidebar() {
           </Link>
 
           <Link
-            to="/messenger"
+            onClick={() =>
+              (window.location.href = "http://localhost:3000/messenger")
+            }
             style={{ textDecoration: "none", color: "inherit" }}
           >
             <li className="sidebarListItem">
