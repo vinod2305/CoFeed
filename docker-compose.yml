@@ -10,6 +10,8 @@ services:
       NODE_ENV: production
     ports:
       - 8800:8800
+    networks:
+      - app-network
 
   frontend:
     image: frontend
@@ -20,6 +22,8 @@ services:
       NODE_ENV: production
     ports:
       - 3000:3000
+    networks:
+      - app-network
 
   socket:
     image: socket
@@ -30,3 +34,9 @@ services:
       NODE_ENV: production
     ports:
       - 8900:8900
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

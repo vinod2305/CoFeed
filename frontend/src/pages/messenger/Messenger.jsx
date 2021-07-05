@@ -19,9 +19,11 @@ export default function Messenger() {
   const socket = useRef();
   const scrollRef = useRef();
 
+  
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
+      console.log("hello")
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
@@ -29,6 +31,12 @@ export default function Messenger() {
       });
     });
   }, []);
+
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
 
   useEffect(() => {
     socket.current.emit("addUser", user._id);
@@ -39,11 +47,7 @@ export default function Messenger() {
     });
   }, [user]);
 
-  useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage, currentChat]);
+
 
   useEffect(() => {
     const getConversations = async () => {
@@ -80,7 +84,7 @@ export default function Messenger() {
     const receiverId = currentChat.members.find(
       (member) => member !== user._id
     );
-
+  
     socket.current.emit("sendMessage", {
       senderId: user._id,
       receiverId,
