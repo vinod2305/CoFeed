@@ -1,6 +1,6 @@
 # CoFeed
 
-- Implemented a full stack social media platform and deployed using dockers.
+- Full stack containerized social media Application.
 - Provides users to view their feeds, connect with friends, and add posts [including photos] with an option to react to them. 
 - Created a private chatroom using Sockets.io for users to send messages to other friends.
 
